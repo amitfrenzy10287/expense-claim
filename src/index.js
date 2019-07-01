@@ -16,9 +16,8 @@ const rootReducer = combineReducers({
 
 const store = createStore(
     rootReducer,
-    applyMiddleware(thunk, sagaMiddleware)
+    applyMiddleware(thunk)
 );
-const sagaMiddleware = createSagaMiddleware();
 
 const app = (
     <Provider store={store}>
