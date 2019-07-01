@@ -1,0 +1,12 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.line-link {
+    border-left: thin solid #ff0000;
+    height: 137px;
+    position: relative;
+    top: -177px;
+    left: 80px;
+}

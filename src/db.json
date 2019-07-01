@@ -1,0 +1,27 @@
+{
+    "addedList": [
+      {
+        "Employee": [],
+        "Supervisor": [],
+        "Admin": [],
+        "Exp1": [],
+        "Exp2": [
+          {
+            "id": 1,
+            "title": "Expense",
+            "type": "emp",
+            "width": 2
+          }
+        ],
+        "Exp3": [],
+        "Sup1": [],
+        "Sup2": [],
+        "Sup3": [],
+        "Adm1": [],
+        "Adm2": [],
+        "Adm3": [],
+        "id": 1
+      }
+    ]
+  }
+    
