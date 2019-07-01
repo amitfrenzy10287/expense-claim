@@ -42,23 +42,10 @@ const maxWidth = {
 class OuterGrid extends React.Component {
   render() {
     const {
-      list,
-      target,
-      compList,
-      canDrop,
-      isOver,
-      connectDropTarget,
-      accepts,
-      maxWidth,
-      clientOffset,
-      dropResult,
-      initialClientOffset,
-      addedList,
-      handleDrop,
-      index
+      target
     } = this.props;
 
-    let dropTargets = [];
+    let dropTargets= [];
 
     if (this.props.target == "Employee") {
       dropTargets = ["Exp1", "Exp2", "Exp3"];
@@ -74,7 +61,7 @@ class OuterGrid extends React.Component {
           <WrapperBox>
             <Header>
               <h2>{`${target}`}</h2>
-            </Header>{" "}
+            </Header>
             <div style={{display:'flex'}}>
             {dropTargets.map((target, index) => (
               <Grid
@@ -87,7 +74,7 @@ class OuterGrid extends React.Component {
                 target={target}
                 maxWidth={this.props.maxWidth}
               />
-            ))}{" "}
+            ))}
             </div>
           </WrapperBox>
         </OuterWrapper>

@@ -127,8 +127,8 @@ class Grid extends React.Component {
                     title={title}
                   />
 
-                  <button onClick={() => this.onDelete(type)}>X</button>
-                  <Line type={type} compList={compList} />
+                  {/* <button onClick={() => this.onDelete(type)}>X</button>
+                  <Line type={type} compList={compList} /> */}
                   {/* <div
                     style={{
                       borderLeft:

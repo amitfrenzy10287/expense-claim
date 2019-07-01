@@ -22,7 +22,7 @@ const WrapperBox = styled.div`
 
 const OuterWrapper = styled.div`
   border: solid 1px #ccc;
-  width: 100%;
+  width: 50%;
   margin: 0 auto;
   display: inline-block;
 `;
@@ -32,8 +32,8 @@ const EntityPanel = styled.div`
 `;
 
 const ButtonHolder = styled.div`
-display: inline-block;
-  float: right;
+    width:50%;
+    display: inline-block;
 `;
 
 const initialList = [
