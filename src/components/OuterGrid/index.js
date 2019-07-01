@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import Grid from "./Grid";
-//import OuterGrid from "./OuterGrid";
-import EntityPalette from "./EntityPalette";
-import { Types } from "./EntityPalette";
-import PercentageCal from "./PercentageCal";
+import Grid from "../Grid";
+import { Types } from "../EntityPalette";
+import PercentageCal from "../PercentageCalc";
 
 const Container = styled.div`
   display: block;
@@ -75,19 +73,19 @@ class OuterGrid extends React.Component {
             <Header>
               <h2>{`${target}`}</h2>
             </Header>{" "}
-            <div style={{display:'flex'}}>
-            {dropTargets.map((target, index) => (
-              <Grid
-                key={this.props.index}
-                accepts={this.props.accepts}
-                list={this.props.list[target]}
-                compList={this.props.addedList}
-                handleDrop={this.props.handleDrop}
-                handleDelete={this.props.handleDelete}
-                target={target}
-                maxWidth={this.props.maxWidth}
-              />
-            ))}{" "}
+            <div style={{ display: "flex" }}>
+              {dropTargets.map((target, index) => (
+                <Grid
+                  key={this.props.index}
+                  accepts={this.props.accepts}
+                  list={this.props.list[target]}
+                  compList={this.props.addedList}
+                  handleDrop={this.props.handleDrop}
+                  handleDelete={this.props.handleDelete}
+                  target={target}
+                  maxWidth={this.props.maxWidth}
+                />
+              ))}{" "}
             </div>
           </WrapperBox>
         </OuterWrapper>

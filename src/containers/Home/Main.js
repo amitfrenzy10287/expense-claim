@@ -1,12 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Paper from '@material-ui/core/Paper';
+import Paper from "@material-ui/core/Paper";
 
-import Grid from "./Grid";
-import OuterGrid from "./OuterGrid";
-import EntityPalette from "./EntityPalette";
-import { Types } from "./EntityPalette";
-import PercentageCal from "./PercentageCal";
+import OuterGrid from "../../components/OuterGrid";
+import EntityPalette, { Types } from "../../components/EntityPalette";
 
 const Container = styled.div`
   display: flex;
@@ -32,7 +29,7 @@ const EntityPanel = styled.div`
 `;
 
 const ButtonHolder = styled.div`
-display: inline-block;
+  display: inline-block;
   float: right;
 `;
 
@@ -147,7 +144,7 @@ class Main extends React.Component {
     return (
       <Container>
         <OuterWrapper>
-          <div style={{height:'534px'}}>
+          <div style={{ height: "534px" }}>
             {" "}
             {dropTargets.map((target, index) => (
               <OuterGrid

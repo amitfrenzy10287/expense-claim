@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { DropTarget } from "react-dnd";
-import ColorEntity from "./ColorEntity";
-import Line from "./Line";
+import DragableBox from "../DragableBox";
+import Line from "../Line";
+import PercentageCalc from "../PercentageCalc";
 const Container = styled.div`
   height: 100px;
   width: 33%;
@@ -12,7 +13,7 @@ const Container = styled.div`
 const List = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content:center;
+  justify-content: center;
 `;
 
 const AddedItems = styled.div`
@@ -40,7 +41,7 @@ const divStyle = {
 
 const deleteButton = styled.div``;
 
-class Grid extends React.Component {
+export class Grid extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -68,58 +69,21 @@ class Grid extends React.Component {
     } = this.props;
     const isActive = isOver && canDrop;
 
-    const perCalc = () => {
-      let percentage = 0;
-      if (this.props.target == "Exp1") {
-        if (this.props.compList.Exp1.length > 0) {
-          percentage = 0;
-          if (this.props.compList.Sup1.length > 0) {
-            percentage = 50;
-            if (this.props.compList.Adm1.length > 0) {
-              percentage = 100;
-            }
-          }
-        }
-      }
-      if (this.props.target == "Exp2") {
-        if (this.props.compList.Exp2.length > 0) {
-          percentage = 0;
-          if (this.props.compList.Sup2.length > 0) {
-            percentage = 50;
-            if (this.props.compList.Adm2.length > 0) {
-              percentage = 100;
-            }
-          }
-        }
-      }
-      if (this.props.target == "Exp3") {
-        if (this.props.compList.Exp3.length > 0) {
-          percentage = 0;
-          if (this.props.compList.Sup3.length > 0) {
-            percentage = 50;
-            if (this.props.compList.Adm3.length > 0) {
-              percentage = 100;
-            }
-          }
-        }
-      }
-
-      return percentage;
-    };
-
     return (
       <Container canDrop={canDrop} isOver={isOver}>
         {connectDropTarget(
           <div style={{ flex: 1, padding: "1rem", height: "70px" }}>
             {(target == "Exp1" || target == "Exp2" || target == "Exp3") && (
               <Header>
-                <span>{`${perCalc()}%`}</span>
+                <span>
+                  <PercentageCalc compList={compList} target={target} />
+                </span>
               </Header>
             )}
             <List>
               {list.map(({ id, title, type, width }) => (
                 <AddedItems>
-                  <ColorEntity
+                  <DragableBox
                     type={type}
                     width={width}
                     key={id}
@@ -201,20 +165,6 @@ export default DropTarget(
         }
       }
 
-      // if(props.compList.Exp1.length > 1) {
-      //    alert("CAN'T");
-      // }
-
-      console.log("TARGET", props.target);
-      // if (props.target === "Supervisor" && props.list.length > 1) {
-      //   console.log("DATA", props.compList);
-      //   console.log("LIST", props.list);
-      //   // if () {
-      //   //   alert("Supervisor");
-      //   //   console.log("DATA", props.compList.Employee);
-      //   //   return;
-      //   // }
-      // }
       props.handleDrop(id, props.target);
     },
     canDrop: (props, monitor) => {

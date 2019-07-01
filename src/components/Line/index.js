@@ -1,5 +1,5 @@
 import React from "react";
-import './styles.css';
+
 import { style } from "@material-ui/system";
 
 function Line({ type, compList }) {
