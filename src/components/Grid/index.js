@@ -41,33 +41,21 @@ const divStyle = {
 
 const deleteButton = styled.div``;
 
-export class Grid extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      divStyle
-    };
-  }
+function Grid({
+    list,
+    compList,
+    canDrop,
+    isOver,
+    connectDropTarget,
+    target,
+    handleDelete
+  }) {  
 
-  onDelete = type => {
-    this.props.handleDelete(this.props.target, type);
+  const onDelete = (type) => {
+    handleDelete(target, type);
   };
 
-  render() {
-    const {
-      list,
-      compList,
-      canDrop,
-      isOver,
-      connectDropTarget,
-      accepts,
-      maxWidth,
-      target,
-      clientOffset,
-      dropResult,
-      initialClientOffset
-    } = this.props;
-    const isActive = isOver && canDrop;
+  const isActive = isOver && canDrop;
 
     return (
       <Container canDrop={canDrop} isOver={isOver}>
@@ -91,23 +79,8 @@ export class Grid extends React.Component {
                     title={title}
                   />
 
-                  <button onClick={() => this.onDelete(type)}>X</button>
+                  <button onClick={() => onDelete(type)}>X</button>
                   <Line type={type} compList={compList} />
-                  {/* <div
-                    style={{
-                      borderLeft:
-                        type == "sup" || type == "adm"
-                          ? "thin solid #ff0000"
-                          : "",
-
-                      height: "137px",
-                      position: "relative",
-                      top: -177,
-                      left: 80
-                    }}
-                  >
-                    &nbsp;
-                  </div> */}
                 </AddedItems>
               ))}
             </List>
@@ -115,7 +88,6 @@ export class Grid extends React.Component {
         )}
       </Container>
     );
-  }
 }
 
 export default DropTarget(
@@ -171,24 +143,6 @@ export default DropTarget(
       const item = monitor.getItem();
       let result =
         item.width <= props.maxWidth && props.accepts.includes(item.type);
-
-      // if (props.target === "Employee") {
-      //   if (props.list.length > 3) {
-      //     alert("Only 3 item's can add");
-      //   }
-      // } else if (props.target === "Supervisor") {
-      //   if (props.list.length > props.compList.Employee.length) {
-      //     alert("NOT");
-      //     return;
-      //   }
-      // }
-      // if(props.target="Employee") {
-      //   if (props.list.length > 2) {
-      //     alert("Only 3 item's can add");
-      //     return;
-      //   }
-      // }
-      // console.log("result>>>", result);
       return result;
     }
   },

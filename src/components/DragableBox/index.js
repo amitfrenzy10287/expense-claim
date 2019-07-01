@@ -2,9 +2,7 @@ import React from "react";
 import { DragSource } from "react-dnd";
 import Box from "@material-ui/core/Box";
 
-class DragableBox extends React.Component {
-  render() {
-    const { title, isDragging, connectDragSource, width } = this.props;
+function DragableBox({title, isDragging, connectDragSource, width}) {
     return connectDragSource(
       <div>
         <Box
@@ -18,7 +16,6 @@ class DragableBox extends React.Component {
         </Box>
       </div>
     );
-  }
 }
 
 export default DragSource(
@@ -27,13 +24,10 @@ export default DragSource(
     beginDrag: props => props
   },
   (connect, monitor) => {
-    console.log(connect, "jjjj");
-
     return {
       connectDragSource: connect.dragSource(),
       connectDragPreview: connect.dragPreview(),
       isDragging: monitor.isDragging()
     };
-    // )
   }
 )(DragableBox);

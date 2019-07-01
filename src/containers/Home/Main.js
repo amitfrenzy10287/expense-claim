@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Paper from "@material-ui/core/Paper";
 
@@ -91,56 +91,47 @@ const maxWidth = {
   Supervisor: 6,
   Admin: 6
 };
-class Main extends React.Component {
-  state = {
-    list: initialList,
-    addedList: {
-      Employee: [],
-      Supervisor: [],
-      Admin: [],
-      Exp1: [],
-      Exp2: [],
-      Exp3: [],
-      Sup1: [],
-      Sup2: [],
-      Sup3: [],
-      Adm1: [],
-      Adm2: [],
-      Adm3: []
-    }
+
+function Main(){
+   const [list, setList] = useState( initialList );
+   const [addedList, setAddedList] = useState( {
+        Employee: [],
+        Supervisor: [],
+        Admin: [],
+        Exp1: [],
+        Exp2: [],
+        Exp3: [],
+        Sup1: [],
+        Sup2: [],
+        Sup3: [],
+        Adm1: [],
+        Adm2: [],
+        Adm3: []
+      } );
+
+  const handleDrop = (id, target) => {
+    setAddedList({  ...addedList,
+      [target]: addedList[target].concat([
+        list.find(news => news.id === id)
+      ])});
   };
 
-  handleDrop = (id, target) => {
-    this.setState(state => ({
-      addedList: {
-        ...state.addedList,
-        [target]: state.addedList[target].concat([
-          state.list.find(news => news.id === id)
-        ])
-      }
-    }));
-  };
-
-  handleDelete = (target, type) => {
+  const handleDelete = (target, type) => {
     const categories = [];
     categories[target] = [];
     categories[type] = [];
-    const addedList = { ...this.state.addedList, ...categories };
-    this.setState(state => ({
-      addedList: {
-        ...addedList
-      }
-    }));
+    const addedLister = { ...addedList, ...categories };
+    setAddedList ({    
+        ...addedLister     
+    });  
   };
 
-  onSubmit = () => {
+  const onSubmit = () => {
     // call post api to save the above object
     // payload contains the object
     // response should be 'success'
   };
 
-  render() {
-    const { list, addedList } = this.state;
     return (
       <Container>
         <OuterWrapper>
@@ -154,8 +145,8 @@ class Main extends React.Component {
                 addedList={addedList}
                 list={addedList}
                 compList={addedList}
-                handleDrop={this.handleDrop}
-                handleDelete={this.handleDelete}
+                handleDrop={handleDrop}
+                handleDelete={handleDelete}
                 target={target}
                 maxWidth={maxWidth[target]}
               />
@@ -169,7 +160,6 @@ class Main extends React.Component {
         </ButtonHolder>
       </Container>
     );
-  }
 }
 
 export default Main;

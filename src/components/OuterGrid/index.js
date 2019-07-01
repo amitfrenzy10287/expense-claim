@@ -37,32 +37,24 @@ const maxWidth = {
   Supervisor: 6,
   Admin: 6
 };
-class OuterGrid extends React.Component {
-  render() {
-    const {
-      list,
-      target,
-      compList,
-      canDrop,
-      isOver,
-      connectDropTarget,
-      accepts,
-      maxWidth,
-      clientOffset,
-      dropResult,
-      initialClientOffset,
-      addedList,
-      handleDrop,
-      index
-    } = this.props;
+
+function OuterGrid({
+  list,
+  target,
+  accepts,
+  maxWidth,
+  addedList,
+  handleDrop,
+  handleDelete
+}) {  
 
     let dropTargets = [];
-
-    if (this.props.target == "Employee") {
+    
+    if (target == "Employee") {
       dropTargets = ["Exp1", "Exp2", "Exp3"];
-    } else if (this.props.target == "Supervisor") {
+    } else if (target == "Supervisor") {
       dropTargets = ["Sup1", "Sup2", "Sup3"];
-    } else if (this.props.target == "Admin") {
+    } else if (target == "Admin") {
       dropTargets = ["Adm1", "Adm2", "Adm3"];
     }
 
@@ -76,14 +68,14 @@ class OuterGrid extends React.Component {
             <div style={{ display: "flex" }}>
               {dropTargets.map((target, index) => (
                 <Grid
-                  key={this.props.index}
-                  accepts={this.props.accepts}
-                  list={this.props.list[target]}
-                  compList={this.props.addedList}
-                  handleDrop={this.props.handleDrop}
-                  handleDelete={this.props.handleDelete}
+                  key={index}
+                  accepts={accepts}
+                  list={list[target]}
+                  compList={addedList}
+                  handleDrop={handleDrop}
+                  handleDelete={handleDelete}
                   target={target}
-                  maxWidth={this.props.maxWidth}
+                  maxWidth={maxWidth}
                 />
               ))}{" "}
             </div>
@@ -92,6 +84,5 @@ class OuterGrid extends React.Component {
       </Container>
     );
   }
-}
 
 export default OuterGrid;
