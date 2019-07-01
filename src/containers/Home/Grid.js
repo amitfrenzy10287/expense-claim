@@ -121,6 +121,8 @@ class Grid extends React.Component {
                 <AddedItems>
                   <ColorEntity
                     type={type}
+                    deleteExpense={this.props.handleDelete}
+                    target={this.props.target}
                     width={width}
                     key={id}
                     id={id}
