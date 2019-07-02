@@ -13,3 +13,5 @@ export const AUTH_INITIATE_LOGOUT = 'AUTH_INITIATE_LOGOUT';
 export const BOOK_MOVIE = 'BOOK_MOVIE';
 export const FETCH_ORDERS = 'FETCH_ORDERS';
 export const INIT_MOVIES = 'INIT_MOVIES';
+export const FETCH_CONTROLS = 'FETCH_CONTROLS';
+export const SET_CONTROLS = 'SET_CONTROLS';

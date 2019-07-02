@@ -202,21 +202,6 @@ export default DropTarget(
           return;
         }
       }
-
-      // if(props.compList.Exp1.length > 1) {
-      //    alert("CAN'T");
-      // }
-
-      console.log("TARGET", props.target);
-      // if (props.target === "Supervisor" && props.list.length > 1) {
-      //   console.log("DATA", props.compList);
-      //   console.log("LIST", props.list);
-      //   // if () {
-      //   //   alert("Supervisor");
-      //   //   console.log("DATA", props.compList.Employee);
-      //   //   return;
-      //   // }
-      // }
       props.handleDrop(id, props.target);
     },
     canDrop: (props, monitor) => {
@@ -224,23 +209,6 @@ export default DropTarget(
       let result =
         item.width <= props.maxWidth && props.accepts.includes(item.type);
 
-      // if (props.target === "Employee") {
-      //   if (props.list.length > 3) {
-      //     alert("Only 3 item's can add");
-      //   }
-      // } else if (props.target === "Supervisor") {
-      //   if (props.list.length > props.compList.Employee.length) {
-      //     alert("NOT");
-      //     return;
-      //   }
-      // }
-      // if(props.target="Employee") {
-      //   if (props.list.length > 2) {
-      //     alert("Only 3 item's can add");
-      //     return;
-      //   }
-      // }
-      // console.log("result>>>", result);
       return result;
     }
   },

@@ -1,6 +1,19 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
+export const fetchControls = () => {
+    return {
+        type: actionTypes.FETCH_CONTROLS
+    };
+};
+
+export const setControls = (controls) => {
+    return {
+        type: actionTypes.SET_CONTROLS,
+        controls
+    };
+};
+
 export const fetchUserSuccess = (authdata) => {
     return {
         type: actionTypes.FETCH_USER_SUCCESS,

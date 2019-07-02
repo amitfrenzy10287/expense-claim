@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Component, useState } from "react";
 import { DragSource } from "react-dnd";
 import Box from '@material-ui/core/Box';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
@@ -6,6 +6,8 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowDownward';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
+import {connect} from 'react-redux';
+import * as actions from '../../store/actions';
 
 const useStyles = makeStyles(theme => ({
   extendedIcon: {
@@ -13,64 +15,65 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const onStartDraw=(e,id)=>{
-  var offsets = e.target.getBoundingClientRect();
-  var top = offsets.top;
-  var left = offsets.left;
-  this.setState({ x: left, y: top,x2:this.state.x2,y2:this.state.y2 });
-}
-const onEndDraw=(e,id)=>{
-  var offsets = e.target.getBoundingClientRect();
-  var top = offsets.top;
-  var left = offsets.left;
-  this.setState({ x2: left, y2: top,x:this.state.x,y:this.state.y });
-}
-
-const ColorEntity =(props)=> {
-  const classes = useStyles();
-  const [controls,setControls] = useState({
-      x1:0,
-      x2:0,
-      y1:0,
-      y2:0
-  });
-  const handleDraw = (e,type)=>{
+const ColorEntity = (props)=>{
+  
+  const handleDraw = (e)=>{
+    debugger;
+    const {setControls,controls,type} = props;
     const offsets = e.target.getBoundingClientRect();
-    const { top,left }= offsets;
-    const controls = type === 'emp' ? {
-      x1:left,
-        x2:controls.x2,
-        y1:top,
-        y2:controls.y2
-    } : {
+    const { top,left } = offsets;
+    // console.log('offsets',offsets);
+    let data = {};
+    if(type === 'emp')
+    {
+      data={
+        x1:left,
+        y1:top
+      }
+    }else{
+      data={
         x2:left,
-        x1:controls.x2,
-        y2:top,
-        y1:controls.y2
-    };
-    setControls(controls);
+        y2: top
+      }
+    }
+    
+    setControls({...controls,...data});
   }
-    const { title, isDragging, connectDragSource, deleteExpense,type,target } = props;
-    console.log('props',props);
+    const { title, isDragging, connectDragSource,controls, deleteExpense,type,target } = props;
+    console.log('fetchcopmntrols',controls);
     return connectDragSource(
         <div>
           <Box style={{cursor:'pointer'}} bgcolor="primary.main" isDragging={isDragging} color="primary.contrastText" p={2} m={1}>
-          {`${title}`}
-          <IconButton onClick={(e)=>handleDraw(e,type)} aria-label="Connect" className={classes.margin} color="secondary" size="small">
+          {title}
+          <IconButton onClick={(e)=>handleDraw(e,type)} aria-label="Connect" color="secondary" size="small">
             <ArrowDownwardIcon fontSize="inherit" />
           </IconButton>
           <IconButton aria-label="Delete" 
             onClick={() => deleteExpense(target , type)}
-            color="secondary" className={classes.margin} size="small">
+            color="secondary" size="small">
             <DeleteIcon />
           </IconButton>
           </Box>
-          {controls.x1 >0 ? <svg id="svg">
+          {controls.x1 > 0 && controls.x2 > 0 ? <svg id="svg">
             <line style={{strokeWidth:'2px',stroke:'#000'}} x1={controls.x1} x2={controls.x2} y1={controls.y1} y2={controls.y2} />
           </svg>: ''}
         </div>
     );
-}
+    }
+  
+ const mapStateToProps = state => {
+   return {
+     controls: state.app.controls
+   }
+ }   
+
+ const mapDispatchToProps = dispatch =>{
+   return {
+     setControls:(data)=>dispatch(actions.setControls(data)),
+     fetchControls:()=>dispatch(actions.fetchControls())
+   }
+ }
+  
 
 export default DragSource(
   props => props.type, // param to pass to check if drop is valid
@@ -82,4 +85,4 @@ export default DragSource(
     connectDragPreview: connect.dragPreview(),
     isDragging: monitor.isDragging()
   })
-)(ColorEntity);
+)(connect(mapStateToProps,mapDispatchToProps)(ColorEntity));
