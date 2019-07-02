@@ -5,4 +5,16 @@ export const fetchRoleSuccess = roles => {
     type: actionTypes.FETCH_ROLE_SUCCESS,
     roles
   };
+}
+export const fetchControls = () => {
+    return {
+        type: actionTypes.FETCH_CONTROLS
+    };
+};
+
+export const setControls = (controls) => {
+    return {
+        type: actionTypes.SET_CONTROLS,
+        controls
+    };
 };

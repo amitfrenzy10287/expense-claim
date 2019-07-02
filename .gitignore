@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # Created by https://www.gitignore.io/api/node,macos
 # Edit at https://www.gitignore.io/?templates=node,macos
@@ -121,3 +122,6 @@ typings/
 .dynamodb/
 
 # End of https://www.gitignore.io/api/node,macos
+=======
+node_modules
+>>>>>>> test
