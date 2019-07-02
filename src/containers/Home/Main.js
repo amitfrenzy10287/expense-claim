@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React , { useState, useEffect }  from "react";
 import styled from "styled-components";
 import Paper from "@material-ui/core/Paper";
+import {roles, actions , initialSet} from "../../containers/Home/Constants";
 
 import OuterGrid from "../../components/OuterGrid";
 import EntityPalette, { Types } from "../../components/EntityPalette";
@@ -33,81 +34,37 @@ const ButtonHolder = styled.div`
   float: right;
 `;
 
-const initialList = [
-  {
-    id: 1,
-    title: "Expense",
-    type: Types.emp,
-    width: 2
-  },
-  {
-    id: 2,
-    title: "Supervisor Approved",
-    type: Types.sup,
-    width: 3
-  },
-  {
-    id: 3,
-    title: "Supervisor Pending",
-    type: Types.sup,
-    width: 5
-  },
-  {
-    id: 4,
-    title: "Supervisor Denied",
-    type: Types.sup,
-    width: 5
-  },
-  {
-    id: 5,
-    title: "Admin Approved",
-    type: Types.adm,
-    width: 3
-  },
-  {
-    id: 6,
-    title: "Admin Pending",
-    type: Types.adm,
-    width: 6
-  },
-  {
-    id: 7,
-    title: "Admin Denied",
-    type: Types.adm,
-    width: 6
-  }
-];
+const initialList = actions;
 
-const dropTargets = ["Employee", "Supervisor", "Admin"];
-
-export const accepts = {
-  Employee: [Types.emp],
-  Supervisor: [Types.sup],
-  Admin: [Types.adm]
+let dropTargets = [];
+const setDropTargets =
+  Object.keys(roles).forEach(key => {
+      dropTargets.push(roles[key].title)    
+  });
+const getAccepts = () =>  {
+  let acceptsNew = {};
+  Object.keys(roles).forEach(key => {
+    acceptsNew[roles[key].title] = [roles[key].type];
+  })
+  return acceptsNew;
 };
 
-const maxWidth = {
-  Employee: 3,
-  Supervisor: 6,
-  Admin: 6
+const getmaxWidth = () =>  {
+  let maxWidthNew = {};
+  Object.keys(roles).forEach(key => {
+    maxWidthNew[roles[key].title] = roles[key].maxWidth;
+  })
+  return maxWidthNew;
 };
+
+export const accepts = getAccepts();
+const maxWidth = getmaxWidth();
+
+const initialCategory = initialSet;
 
 function Main(){
    const [list, setList] = useState( initialList );
-   const [addedList, setAddedList] = useState( {
-        Employee: [],
-        Supervisor: [],
-        Admin: [],
-        Exp1: [],
-        Exp2: [],
-        Exp3: [],
-        Sup1: [],
-        Sup2: [],
-        Sup3: [],
-        Adm1: [],
-        Adm2: [],
-        Adm3: []
-      } );
+   const [addedList, setAddedList] = useState( initialCategory );
 
   const handleDrop = (id, target) => {
     setAddedList({  ...addedList,
@@ -132,6 +89,18 @@ function Main(){
     // response should be 'success'
   };
 
+  const [count, setCount] = useState(0);    
+  const [drawLine, setDrawLine] = useState([]);
+
+  const setDrawLiner = (target) => {
+      let targetArr = [target];    
+      setDrawLine( drawLine.concat(targetArr) );  
+  }
+
+  useEffect(() => {
+    console.log(drawLine)
+  }, [drawLine]);
+    
     return (
       <Container>
         <OuterWrapper>
@@ -149,6 +118,10 @@ function Main(){
                 handleDelete={handleDelete}
                 target={target}
                 maxWidth={maxWidth[target]}
+                setCount={setCount}
+                count={count}
+                setDrawLine={setDrawLiner}
+                drawLine={drawLine}
               />
             ))}{" "}
           </div>

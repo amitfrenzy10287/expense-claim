@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useState, useEffect }  from "react";
 import styled from "styled-components";
 import { DropTarget } from "react-dnd";
 import DragableBox from "../DragableBox";
@@ -32,13 +32,6 @@ const isValidDrop = props => {
   return props => props.accepts;
 };
 
-const divStyle = {
-  margin: "40px",
-  height: "20px",
-  width: "2",
-  border: "5px solid red"
-};
-
 const deleteButton = styled.div``;
 
 function Grid({
@@ -48,8 +41,11 @@ function Grid({
     isOver,
     connectDropTarget,
     target,
-    handleDelete
+    handleDelete,
+    drawLine,
+    setDrawLine
   }) {  
+   // console.log(props.accepts);
 
   const onDelete = (type) => {
     handleDelete(target, type);
@@ -78,7 +74,7 @@ function Grid({
                     id={id}
                     title={title}
                   />
-
+                  <button onClick={() => setDrawLine(target)}>+</button>
                   <button onClick={() => onDelete(type)}>X</button>
                   <Line type={type} compList={compList} />
                 </AddedItems>
@@ -92,6 +88,7 @@ function Grid({
 
 export default DropTarget(
   props => props.accepts, // define which entities are valid drop here
+  
   {
     drop: (props, monitor) => {
       const { id } = monitor.getItem();

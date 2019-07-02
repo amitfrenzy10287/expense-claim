@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Grid from "../Grid";
 import { Types } from "../EntityPalette";
 import PercentageCal from "../PercentageCalc";
+import {roles} from "../../containers/Home/Constants";
 
 const Container = styled.div`
   display: block;
@@ -26,17 +27,23 @@ const Header = styled.div`
   flex: 1;
 `;
 
-export const accepts = {
-  Employee: [Types.emp],
-  Supervisor: [Types.sup],
-  Admin: [Types.adm]
+const getAccepts = () =>  {
+  let acceptsNew = {};
+  Object.keys(roles).forEach(key => {
+    acceptsNew[roles[key].title] = [roles[key].type];
+  })
+  return acceptsNew;
+};
+const getmaxWidth = () =>  {
+  let maxWidthNew = {};
+  Object.keys(roles).forEach(key => {
+    maxWidthNew[roles[key].title] = roles[key].maxWidth;
+  })
+  return maxWidthNew;
 };
 
-const maxWidth = {
-  Employee: 3,
-  Supervisor: 6,
-  Admin: 6
-};
+export const accepts = getAccepts();
+const maxWidth = getmaxWidth();
 
 function OuterGrid({
   list,
@@ -45,18 +52,23 @@ function OuterGrid({
   maxWidth,
   addedList,
   handleDrop,
-  handleDelete
+  handleDelete,
+  drawLine,
+  setDrawLine
 }) {  
 
-    let dropTargets = [];
-    
-    if (target == "Employee") {
-      dropTargets = ["Exp1", "Exp2", "Exp3"];
-    } else if (target == "Supervisor") {
-      dropTargets = ["Sup1", "Sup2", "Sup3"];
-    } else if (target == "Admin") {
-      dropTargets = ["Adm1", "Adm2", "Adm3"];
-    }
+  let dropTargets = [];
+
+  const setDropTargets =
+    Object.keys(roles).forEach(key => {
+      if (target == roles[key].title) {
+        let targetObject = roles[key].target;
+        dropTargets = [];
+        Object.keys(targetObject).forEach(key => {
+          dropTargets.push(targetObject[key].containerID)
+        })
+      }
+    });
 
     return (
       <Container>
@@ -76,6 +88,8 @@ function OuterGrid({
                   handleDelete={handleDelete}
                   target={target}
                   maxWidth={maxWidth}
+                  setDrawLine={setDrawLine}
+                  drawLine={drawLine}
                 />
               ))}{" "}
             </div>

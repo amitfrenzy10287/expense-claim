@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import DragableBox from "../DragableBox";
+import {roles} from "../../containers/Home/Constants";
 
 const Container = styled.div`
   margin-left: 10px;
@@ -10,10 +11,12 @@ const Container = styled.div`
   border: solid 1px #cacaca;
 `;
 
-export const Types = {
-  emp: "emp",
-  sup: "sup",
-  adm: "adm"
+const getTypes = () =>  {
+    let TypesNew = {};
+    Object.keys(roles).forEach(key => {
+        TypesNew[roles[key].type] = roles[key].type;
+    })
+    return TypesNew;
 };
 
 const EntityPalette = ({ list }) => {
@@ -27,4 +30,5 @@ const EntityPalette = ({ list }) => {
   );
 };
 
+export const Types = getTypes();
 export default EntityPalette;
