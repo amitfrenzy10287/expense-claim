@@ -56,7 +56,7 @@
   "roles": [{
       "id": 1,
       "title": "Employee",
-      "types": "emp",
+      "type": "emp",
       "maxWidth": 3,
       "target": [{
           "id": 1,

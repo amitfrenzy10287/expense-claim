@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import Home from "./containers/Home";
@@ -11,7 +11,6 @@ const App = props => {
   useEffect(() => {
     props.fetchRoleSuccess();
   }, []);
-
   let routes = (
     <Switch>
       <Route path="/" exact component={Home} />
@@ -26,9 +25,10 @@ const App = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  getRole: state.app.roles
-});
+const mapStateToProps = state =>
+  console.log("SATATE", state) || {
+    getRole: state.app.roles
+  };
 
 const mapDispatchToProps = dispatch => {
   return {
