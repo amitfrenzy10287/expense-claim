@@ -1,26 +1,42 @@
-import React, { Component } from 'react';
-import Home from './containers/Home';
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
-import Layout from './components/Layout';
+import React, { Component, useEffect, useState } from "react";
+import axios from "axios";
+import { connect } from "react-redux";
+import Home from "./containers/Home";
+import { fetchRoleSuccess } from "./store/actions";
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+import Layout from "./components/Layout";
 
-class App extends Component{
-  render() {
-    const { isAuthenticated } = this.props;
-    let routes = (
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Redirect to="/" />
-        </Switch>
-    );
+const App = props => {
+  const [result, setResult] = useState();
+  useEffect(() => {
+    props.fetchRoleSuccess();
+  }, []);
 
-    return (
-        <div>
-          <Layout>
-            {routes}
-          </Layout>
-        </div>
-    );
-  }
+  let routes = (
+    <Switch>
+      <Route path="/" exact component={Home} />
+      <Redirect to="/" />
+    </Switch>
+  );
+
+  return (
+    <div>
+      <Layout>{routes}</Layout>
+    </div>
+  );
 };
 
-export default withRouter( App );
+const mapStateToProps = state => ({
+  getRole: state.app.roles
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchRoleSuccess: () => dispatch(fetchRoleSuccess())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(App));

@@ -1,4 +1,1 @@
-export {
-    userLogin,
-    logout,
-} from './app';
+export { fetchRoleSuccess } from "./app";

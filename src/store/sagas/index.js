@@ -1,15 +1,11 @@
-import { takeEvery, all, takeLatest } from "redux-saga/effects";
+import { delay } from "redux-saga";
+import { call, put } from "redux-saga/effects";
+import axios from "axios";
+import { fetchRoleSuccess } from "../actions";
 
-import * as actionTypes from '../actions/actionTypes';
-import { initMoviesAvailableSaga,initSeatsAvailableSaga } from "./watchActions";
-import { bookMovieSaga, fetchOrdersSaga } from "./watchRoles";
+const fetchRole = function*() {
+  const response = yield call(axios.get, `http://localhost:9000/roles`);
+  yield put(fetchRoleSuccess(response.data));
+};
 
-export function* watchMovieBooking() { 
-  yield takeEvery(actionTypes.INIT_MOVIES, initMoviesAvailableSaga);
-  yield takeEvery(actionTypes.INIT_MOVIES, initSeatsAvailableSaga);
-}
-
-export function* watchOrder() {
-  yield takeLatest(actionTypes.BOOK_MOVIE, bookMovieSaga);
-  yield takeEvery(actionTypes.FETCH_ORDERS, fetchOrdersSaga);
-}
+export default fetchRole;
